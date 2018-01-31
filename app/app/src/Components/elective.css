@@ -1,0 +1,8 @@
+.App electiveRowStyle {
+  border: 2px solid black;
+  horizontalAlign: justify;
+
+}
+.App tbody{
+  border: '2px solid black';
+}
