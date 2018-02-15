@@ -11,7 +11,7 @@ class Elective extends Component{
       }else {
         type = "course";
       }
-      this.handler = this.handler.bind(this)
+    this.selectCourseHandler = this.selectCourseHandler.bind(this)
       this.state = {
         title: this.props.title,
         courses: this.props.courses,
@@ -23,7 +23,7 @@ class Elective extends Component{
       }
     }
 
-    handler(credits,selected){
+  selectCourseHandler(credits,selected){
       console.log("in Handler")
       if (this.state.electiveType == "credit"){
         if (selected){
@@ -67,7 +67,8 @@ const fulfilledStyle = {
   border: '2px solid black',
   backgroundColor: '#4dff4d',
   margin: 'auto',
-  horizontalAlign: 'center'
+  horizontalAlign: 'center',
+  overflow: 'auto'
 }
 
     console.log(courses)
@@ -75,6 +76,7 @@ const fulfilledStyle = {
     console.log(numSelected)
     console.log(fulfilled)
 
+//if elective is fulfilled, this is rendered
     if ((type == "credit" && numCredits <= numSelected) || (type == "course" && numCourses <= numSelected)){
       return(
     <div style={fulfilledStyle}>
@@ -82,7 +84,7 @@ const fulfilledStyle = {
     <tbody>
     <tr className = "electiveRow" style={styles.electiveRowStyle}>
       {courses.map(course => <td><Course key= {course.name}
-      handler = {this.handler}
+    selectCourseHandler = {this.selectCourseHandler}
       name={course.name}
       prerequisites={course.prerequisites}
       credits={course.credits}
@@ -98,18 +100,25 @@ const fulfilledStyle = {
       </table>
     </div>
   )
-}else {
-  const style = {
+}
+//if elective is not fulfilled, this is rendered
+else {
+  const electiveStyle = {
     border: '2px solid black',
-    margin: 'auto'
+    margin: 'auto',
+    overflow: 'auto'
   }
+  const rowStyle = {
+    width: '75%'
+  }
+
   return(
-<div style={style}>
+<div style={electiveStyle}>
 <table>
 <tbody>
-<tr className = "electiveRow">
+<tr className = "electiveRow" style={rowStyle}>
   {courses.map(course => <td><Course key= {course.name}
-  handler = {this.handler}
+selectCourseHandler = {this.selectCourseHandler}
   name={course.name}
   prerequisites={course.prerequisites}
   credits={course.credits}

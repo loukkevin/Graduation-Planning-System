@@ -1,8 +1,15 @@
-.App electiveRowStyle {
+.electiveRowStyle {
   border: 2px solid black;
-  horizontalAlign: justify;
+  horizontal-align: justify;
 
 }
-.App tbody{
+.tbody{
   border: '2px solid black';
+}
+
+.fulfilledStyle = {
+  border: 2px solid black;
+  background-color: #4dff4d;
+  margin: auto;
+  horizontal-align: center;
 }

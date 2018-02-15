@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Course from './Components/Course';
 import Elective from './Components/Elective';
+import PlanPage from './Components/PlanPage'
 
 class App extends Component {
   constructor(){
@@ -19,10 +20,12 @@ this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+//used for grabbing the url from the text box
   handleChange(event) {
     this.setState({url: event.target.value});
   }
 
+//handles submitting the DARS url
   handleSubmit(event) {
     event.preventDefault();
     let url = encodeURIComponent(this.state.url)
@@ -36,6 +39,7 @@ this.handleChange = this.handleChange.bind(this);
     };
   render() {
 
+
     if (this.state.submitted){
     console.log(this.state.requirements)
     console.log(this.state.electives)
@@ -43,7 +47,7 @@ this.handleChange = this.handleChange.bind(this);
     let electives = this.state.electives
 
     const appStyle = {
-      width: '80%',
+      width: '99%',
       border: '2px solid black',
       margin: 'auto',
       padding: '5px'
@@ -54,15 +58,7 @@ this.handleChange = this.handleChange.bind(this);
     }
     return (
       <div className="App" style={appStyle}>
-        <div>
-          <h1>Electives</h1>
-          {electives.map(elective => <div><Elective
-            title={elective.title}
-            courses={elective.electiveCourses}
-            numCredits={elective.numOfCredits}
-            numCourses={elective.numOfCourses} />
-            <div style={dividerStyle}></div></div>)}
-        </div>
+        <PlanPage />
       </div>
     );
   }
