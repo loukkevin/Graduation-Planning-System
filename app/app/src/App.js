@@ -58,7 +58,15 @@ this.handleChange = this.handleChange.bind(this);
     }
     return (
       <div className="App" style={appStyle}>
-        <PlanPage />
+        <div>
+          <h1>Electives</h1>
+          {electives.map(elective => <div><Elective
+            title={elective.title}
+            courses={elective.electiveCourses}
+            numCredits={elective.numOfCredits}
+            numCourses={elective.numOfCourses} />
+            <div style={dividerStyle}></div></div>)}
+        </div>
       </div>
     );
   }

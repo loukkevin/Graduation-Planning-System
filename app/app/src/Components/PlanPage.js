@@ -71,7 +71,7 @@ class PlanPage extends Component {
         <tr >
         <td style={infoPanelStyle}> INFO PANEL
         </td>
-        <td style={optionPanelStyle}>OPIONS PANEL
+        <td style={optionPanelStyle}>OPTIONS PANEL
         </td>
         </tr>
         </table>

@@ -12,11 +12,12 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang.StringEscapeUtils;
 
 @Component
 public class ParseService {
 String url;
-Document doc; 
+Document document; 
 List<Course> courseOk;
 List<String> courseNotOk;
 List<String> courseNotOkTitle;
@@ -30,10 +31,8 @@ List<Elective> electives;
 	public ProgramRequirements parse(String url) throws IOException {
 		
                 File input = new File (url);
-                doc = Jsoup.parse(input, "UTF-8");
-		//url = "https://webproc.mnscu.edu/darsia/bar?jobQSeqNo=B6RuercLEqTlEvpnuatkcg%3D%3D&job_id=QKoEMdNUU%2F7wpwAxlSakJ%2F92V68PvRA5";//justins DARS
-        //url = "https://webproc.mnscu.edu/darsia/bar?jobQSeqNo=wnxu3hAexFZAYTgc40imxw%3D%3D&job_id=QKoEMdNUU%2F4BeyGSmZzwzAuq6PDTEFUk";//kevin's DARS
-		//doc = Jsoup.connect(url).get();
+                document = Jsoup.parse(input, "UTF-8");//local file testing 
+		//doc = Jsoup.connect(url).get();//actual URL input
 		System.out.println("DARS Parsing");
 		courseTaken();
 
@@ -42,21 +41,22 @@ List<Elective> electives;
 		courseNotTaken();
 
 		ProgramRequirements progReqs = new ProgramRequirements(requirements,electives,courseOk);
-            String requirementsJson = new Gson().toJson(requirements);
-            String electivesJson = new Gson().toJson(electives);
+                String requirementsJson = new Gson().toJson(requirements);
+                String electivesJson = new Gson().toJson(electives);
             
-            System.out.println("requirementsJson:\n" + requirementsJson);
-            System.out.println("electivesJson:\n" + electivesJson);
+                System.out.println("requirementsJson:\n" + requirementsJson);
+                System.out.println("electivesJson:\n" + electivesJson);
+
 		return progReqs;
 	}
         
-	private void courseNotTaken() {
+	private void courseNotTaken() throws IOException {
                 requirements = new ArrayList();
                 electives = new ArrayList();
 		courseNotOk = new ArrayList();
 		courseNotOkTitle = new ArrayList();
-		Elements notTakenTitle = doc.select("span[class=auditLineType_17_noSubrequirementTLine]");
-		Elements notTaken = doc.select("span[class=auditLineType_29_noSubrequirementAcceptCourses]");
+		Elements notTakenTitle = document.select("span[class=auditLineType_17_noSubrequirementTLine]");
+		Elements notTaken = document.select("span[class=auditLineType_29_noSubrequirementAcceptCourses]");
 		System.out.println("********************");
 		System.out.println("\nCourses not taken");
 		System.out.println("********************");
@@ -111,14 +111,14 @@ List<Elective> electives;
 	 */
 	private void courseTaken() {
 		courseOk = new ArrayList();
-		Elements ctable = doc.select("span[class=auditLineType_22_okSubrequirementCourses]");
+		Elements ctable = document.select("span[class=auditLineType_22_okSubrequirementCourses]");
 		System.out.println("********************");
 		System.out.println("Courses that have been taken");
 		System.out.println("********************");
 		for(Element course:ctable) {
 			String cTaken = course.text().substring(5,14).replaceAll(" ", "");
 			//System.out.println(cTaken);
-			Course newCourse = new Course(cTaken,null,0,"description");
+			Course newCourse = new Course(cTaken,null,0,"description",null);
 			courseOk.add(newCourse);	
 		}
 	}

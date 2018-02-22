@@ -5,15 +5,25 @@ import java.util.List;
 
 public class Course {
 	String name;
-	List<Course> prerequisites = new ArrayList();
+	List<String> prerequisites = new ArrayList();
 	int credits;
 	String description;
-	public Course(String name, List<Course> prerequisites, int credits, String description) {
+        List<String> semestersOffered = new ArrayList();
+
+    public void setSemestersOffered(List<String> semestersOffered) {
+        this.semestersOffered = semestersOffered;
+    }
+
+    public List<String> getSemestersOffered() {
+        return semestersOffered;
+    }
+	public Course(String name, List<String> prerequisites, int credits, String description, List<String> semestersOffered) {
 		super();
 		this.name = name;
 		this.prerequisites = prerequisites;
 		this.credits = credits;
 		this.description = description;
+                this.semestersOffered = semestersOffered;
 	}
 	public String getName() {
 		return name;
@@ -21,10 +31,10 @@ public class Course {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Course> getPrerequisites() {
+	public List<String> getPrerequisites() {
 		return prerequisites;
 	}
-	public void setPrerequisites(List<Course> prerequisites) {
+	public void setPrerequisites(List<String> prerequisites) {
 		this.prerequisites = prerequisites;
 	}
 	public int getCredits() {
@@ -39,6 +49,12 @@ public class Course {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+        public void addPrerequisite (String prereq){
+            this.prerequisites.add(prereq);
+        }
+        public void addSemesterOffered (String semesterOffered){
+            this.prerequisites.add(semesterOffered);
+        }
 	
 	
 }
